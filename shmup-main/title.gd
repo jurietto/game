@@ -188,7 +188,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if state == MenuState.MAIN:
 		# Up
 		if e.keycode == KEY_UP or e.keycode == KEY_W:
-			menu_index = (menu_index + 1) % 2
+			menu_index = (menu_index - 1 + 2) % 2
 			_update_cursor_position()
 		# Down
 		elif e.keycode == KEY_DOWN or e.keycode == KEY_S:
@@ -206,7 +206,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		# ENTER or ESC to go back
 		if e.keycode == KEY_ENTER or e.keycode == KEY_KP_ENTER or e.keycode == KEY_ESCAPE:
 			_set_state(MenuState.MAIN)
-
 
 func _update_cursor_position() -> void:
 	var target_label: Label = start_label if menu_index == 0 else instructions_label
