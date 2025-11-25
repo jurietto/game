@@ -88,6 +88,7 @@ const CUTSCENE_DURATION: float = 4.0
 
 
 func _ready() -> void:
+	_ensure_input_actions()
 	randomize()
 	_create_background()
 	_create_player()
@@ -292,6 +293,32 @@ func _start_cutscene() -> void:
 	cutscene_timer = CUTSCENE_DURATION
 	if cutscene_panel:
 		cutscene_panel.visible = true
+
+
+func _ensure_input_actions() -> void:
+	# Provide default controls in case the Input Map is empty.
+	_ensure_action_keys("ui_accept", [KEY_ENTER, KEY_KP_ENTER, KEY_SPACE])
+	_ensure_action_keys("ui_up", [KEY_UP, KEY_W])
+	_ensure_action_keys("ui_down", [KEY_DOWN, KEY_S])
+	_ensure_action_keys("ui_left", [KEY_LEFT, KEY_A])
+	_ensure_action_keys("ui_right", [KEY_RIGHT, KEY_D])
+
+
+func _ensure_action_keys(action: String, keycodes: Array) -> void:
+	if not InputMap.has_action(action):
+		InputMap.add_action(action)
+
+	for keycode in keycodes:
+		var exists := false
+		for ev in InputMap.action_get_events(action):
+			if ev is InputEventKey and ev.keycode == keycode:
+				exists = true
+				break
+
+			if not exists:
+				var event := InputEventKey.new()
+				event.keycode = keycode
+				InputMap.action_add_event(action, event)
 
 
 func _begin_gameplay() -> void:

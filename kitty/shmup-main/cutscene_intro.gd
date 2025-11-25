@@ -8,6 +8,7 @@ const CUTSCENE_FONT_PATH := "res://DotGothic16-Regular.ttf"
 const CUTSCENE_IMAGE_PATH := "res://cutscene kitty.png"
 
 func _ready() -> void:
+	_ensure_input_actions()
 	var screen: Vector2 = get_viewport_rect().size
 
 	# --- Background (pure black) ---
@@ -48,10 +49,30 @@ func _ready() -> void:
 
 	var font: Font = load(CUTSCENE_FONT_PATH) as Font
 	if font:
-		text_label.add_theme_font_override("font", font)
-		text_label.add_theme_font_size_override("font_size", 18)
+	text_label.add_theme_font_override("font", font)
+	text_label.add_theme_font_size_override("font_size", 18)
 
 	add_child(text_label)
+
+
+func _ensure_input_actions() -> void:
+	if not InputMap.has_action("ui_accept"):
+		InputMap.add_action("ui_accept")
+
+	var events := InputMap.action_get_events("ui_accept")
+	var keycodes := [KEY_ENTER, KEY_KP_ENTER, KEY_SPACE]
+
+	for keycode in keycodes:
+		var exists := false
+		for ev in events:
+			if ev is InputEventKey and ev.keycode == keycode:
+				exists = true
+				break
+
+		if not exists:
+			var event := InputEventKey.new()
+			event.keycode = keycode
+			InputMap.action_add_event("ui_accept", event)
 
 
 func _unhandled_input(event: InputEvent) -> void:
