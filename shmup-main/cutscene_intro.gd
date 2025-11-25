@@ -2,6 +2,7 @@ extends Node2D
 
 const NEXT_SCENE_PATH := "res://main.tscn"
 const CUTSCENE_FONT_PATH := "res://DotGothic16-Regular.ttf"
+const CUTSCENE_FONT_SIZE := 24
 const CUTSCENE_IMAGE_PATH := "res://cutscene kitty.png"
 
 const KITTY_SCALE := 0.4
@@ -66,7 +67,7 @@ func _ready() -> void:
     var font := load(CUTSCENE_FONT_PATH) as Font
     if font:
         text_label.add_theme_font_override("font", font)
-        text_label.add_theme_font_size_override("font_size", 16) # using size 16 for DotGothic16-Regular
+        text_label.add_theme_font_size_override("font_size", CUTSCENE_FONT_SIZE)
     else:
         push_warning("Failed to load font at " + CUTSCENE_FONT_PATH)
 

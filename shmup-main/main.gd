@@ -27,6 +27,8 @@ const PLAYER_HURT_TIME: float = 0.4
 
 const SHOOT_SOUND: AudioStream = preload("res://playerbullet.wav")
 const POP_SOUND: AudioStream = preload("res://pop.wav")
+const UI_FONT_PATH := "res://DotGothic16-Regular.ttf"
+const UI_FONT_SIZE := 24
 
 enum GameState { PLAYING, STAGE_CLEAR, GAME_OVER }
 
@@ -190,16 +192,17 @@ func _create_ui() -> void:
 	ui_layer = CanvasLayer.new()
 	add_child(ui_layer)
 
-	score_label = Label.new()
-	score_label.text = "Score: 0"
-	score_label.position = Vector2(10, 10)
+        score_label = Label.new()
+        score_label.text = "Score: 0"
+        score_label.position = Vector2(10, 10)
 
-	var font_res: Resource = load("res://DotGothic16-Regular.ttf")
-	var font: Font = font_res as Font
-	if font:
-		score_label.add_theme_font_override("font", font)
+        var font_res: Resource = load(UI_FONT_PATH)
+        var font: Font = font_res as Font
+        if font:
+                score_label.add_theme_font_override("font", font)
+                score_label.add_theme_font_size_override("font_size", UI_FONT_SIZE)
 
-	ui_layer.add_child(score_label)
+        ui_layer.add_child(score_label)
 
 	var screen: Vector2 = get_viewport_rect().size
 
@@ -222,18 +225,20 @@ func _create_ui() -> void:
 	ui_layer.add_child(end_panel)
 
 	end_title_label = Label.new()
-	end_title_label.position = Vector2(screen.x / 2 - 150, screen.y / 2 - 50)
-	end_title_label.text = ""
-	end_panel.add_child(end_title_label)
+        end_title_label.position = Vector2(screen.x / 2 - 150, screen.y / 2 - 50)
+        end_title_label.text = ""
+        end_panel.add_child(end_title_label)
 
-	end_stats_label = Label.new()
-	end_stats_label.position = Vector2(screen.x / 2 - 150, screen.y / 2)
-	end_stats_label.text = ""
-	end_panel.add_child(end_stats_label)
+        end_stats_label = Label.new()
+        end_stats_label.position = Vector2(screen.x / 2 - 150, screen.y / 2)
+        end_stats_label.text = ""
+        end_panel.add_child(end_stats_label)
 
-	if font:
-		end_title_label.add_theme_font_override("font", font)
-		end_stats_label.add_theme_font_override("font", font)
+        if font:
+                end_title_label.add_theme_font_override("font", font)
+                end_stats_label.add_theme_font_override("font", font)
+                end_title_label.add_theme_font_size_override("font_size", UI_FONT_SIZE)
+                end_stats_label.add_theme_font_size_override("font_size", UI_FONT_SIZE)
 
 
 func _update_score_label() -> void:

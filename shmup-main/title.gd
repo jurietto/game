@@ -22,6 +22,7 @@ const GAME_SCENE_PATH := "res://cutscene_intro.tscn"
 
 # Use DotGothic16-Regular everywhere
 const MENU_FONT_PATH := "res://DotGothic16-Regular.ttf"
+const MENU_FONT_SIZE := 24
 
 
 func _ready() -> void:
@@ -67,11 +68,11 @@ func _create_main_menu() -> void:
 	title_label.text = "KITTY PANIC ☆"
 	title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title_label.position = Vector2(0, screen.y * 0.18)
-	title_label.size = Vector2(screen.x, 40)
-	if font:
-		title_label.add_theme_font_override("font", font)
-	title_label.add_theme_font_size_override("font_size", 32)
-	ui_layer.add_child(title_label)
+        title_label.size = Vector2(screen.x, 40)
+        if font:
+                title_label.add_theme_font_override("font", font)
+        title_label.add_theme_font_size_override("font_size", MENU_FONT_SIZE)
+        ui_layer.add_child(title_label)
 
 	# Left margin for menu items
 	var menu_margin_left: float = screen.x * 0.15
@@ -81,30 +82,30 @@ func _create_main_menu() -> void:
 	start_label.text = "Start Game"
 	start_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	start_label.position = Vector2(menu_margin_left, screen.y * 0.35)
-	start_label.size = Vector2(screen.x - menu_margin_left * 2.0, 30)
-	if font:
-		start_label.add_theme_font_override("font", font)
-	start_label.add_theme_font_size_override("font_size", 22)
-	ui_layer.add_child(start_label)
+        start_label.size = Vector2(screen.x - menu_margin_left * 2.0, 30)
+        if font:
+                start_label.add_theme_font_override("font", font)
+        start_label.add_theme_font_size_override("font_size", MENU_FONT_SIZE)
+        ui_layer.add_child(start_label)
 
 	# Instructions – LEFT aligned
 	instructions_label = Label.new()
 	instructions_label.text = "Instructions"
 	instructions_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	instructions_label.position = Vector2(menu_margin_left, screen.y * 0.42)
-	instructions_label.size = Vector2(screen.x - menu_margin_left * 2.0, 30)
-	if font:
-		instructions_label.add_theme_font_override("font", font)
-	instructions_label.add_theme_font_size_override("font_size", 22)
-	ui_layer.add_child(instructions_label)
+        instructions_label.size = Vector2(screen.x - menu_margin_left * 2.0, 30)
+        if font:
+                instructions_label.add_theme_font_override("font", font)
+        instructions_label.add_theme_font_size_override("font_size", MENU_FONT_SIZE)
+        ui_layer.add_child(instructions_label)
 
 	# Cursor just to the left of the menu text
-	cursor_label = Label.new()
-	cursor_label.text = "▶"
-	if font:
-		cursor_label.add_theme_font_override("font", font)
-	cursor_label.add_theme_font_size_override("font_size", 22)
-	ui_layer.add_child(cursor_label)
+        cursor_label = Label.new()
+        cursor_label.text = "▶"
+        if font:
+                cursor_label.add_theme_font_override("font", font)
+        cursor_label.add_theme_font_size_override("font_size", MENU_FONT_SIZE)
+        ui_layer.add_child(cursor_label)
 
 	_update_cursor_position()
 
@@ -137,21 +138,21 @@ func _create_instructions_screen() -> void:
 	instructions_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	instructions_text.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	instructions_text.position = Vector2(0, screen.y * 0.2)
-	instructions_text.size = Vector2(screen.x, screen.y * 0.5)
-	if font:
-		instructions_text.add_theme_font_override("font", font)
-	instructions_text.add_theme_font_size_override("font_size", 20)
-	instructions_panel.add_child(instructions_text)
+        instructions_text.size = Vector2(screen.x, screen.y * 0.5)
+        if font:
+                instructions_text.add_theme_font_override("font", font)
+        instructions_text.add_theme_font_size_override("font_size", MENU_FONT_SIZE)
+        instructions_panel.add_child(instructions_text)
 
 	back_label = Label.new()
 	back_label.text = "Press ENTER to go back"
 	back_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	back_label.position = Vector2(0, screen.y * 0.75)
-	back_label.size = Vector2(screen.x, 30)
-	if font:
-		back_label.add_theme_font_override("font", font)
-	back_label.add_theme_font_size_override("font_size", 18)
-	instructions_panel.add_child(back_label)
+        back_label.size = Vector2(screen.x, 30)
+        if font:
+                back_label.add_theme_font_override("font", font)
+        back_label.add_theme_font_size_override("font_size", MENU_FONT_SIZE)
+        instructions_panel.add_child(back_label)
 
 	instructions_panel.visible = false
 
