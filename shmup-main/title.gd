@@ -186,11 +186,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	# MAIN MENU
 	if state == MenuState.MAIN:
-		# Up
-		if e.keycode == KEY_UP or e.keycode == KEY_W:
-			menu_index = (menu_index + 1) % 2
-			_update_cursor_position()
-		# Down
+                # Up
+                if e.keycode == KEY_UP or e.keycode == KEY_W:
+                        menu_index = (menu_index - 1 + 2) % 2
+                        _update_cursor_position()
+                # Down
 		elif e.keycode == KEY_DOWN or e.keycode == KEY_S:
 			menu_index = (menu_index + 1) % 2
 			_update_cursor_position()
