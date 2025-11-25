@@ -12,6 +12,9 @@ func _ready():
 
     if texture:
         var tex_size := texture.get_size() * kitty_scale
+        custom_minimum_size = Vector2(tex_size.x, tex_size.y + top_padding)
+        size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+        stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
         offset_left = -tex_size.x * 0.5
         offset_right = tex_size.x * 0.5
         offset_bottom = top_padding + tex_size.y
@@ -19,6 +22,10 @@ func _ready():
         offset_left = 0.0
         offset_right = 0.0
         offset_bottom = top_padding
+
+    # Ensure the widget reserves space in containers even before stretch happens
+    if custom_minimum_size == Vector2.ZERO:
+        custom_minimum_size = Vector2(0, top_padding)
 
     offset_top = top_padding
     mouse_filter = MOUSE_FILTER_IGNORE
