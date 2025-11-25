@@ -7,9 +7,25 @@ const NEXT_SCENE_PATH := "res://main.tscn"
 const CUTSCENE_FONT_PATH := "res://DotGothic16-Regular.ttf"
 const CUTSCENE_IMAGE_PATH := "res://cutscene kitty.png"
 
+const KITTY_SCALE := 0.4
+const KITTY_TOP_PADDING := 20.0
+const TEXT_GAP := 100.0
+
+const CutsceneKitty := preload("res://cutscene_kitty.gd")
+const Dialogue := preload("res://dialogue.gd")
+
 func _ready() -> void:
     _ensure_input_actions()
     var screen: Vector2 = get_viewport_rect().size
+
+    # UI root lives on a CanvasLayer so sizing uses the viewport instead of Node2D
+    var layer := CanvasLayer.new()
+    add_child(layer)
+
+    var ui_root := Control.new()
+    ui_root.set_anchors_preset(Control.PRESET_FULL_RECT)
+    ui_root.size = screen
+    layer.add_child(ui_root)
 
     # --- Background (pure black) ---
     var bg_rect := ColorRect.new()
@@ -22,40 +38,46 @@ func _ready() -> void:
     bg_rect.offset_top = 0.0
     bg_rect.offset_right = 0.0
     bg_rect.offset_bottom = 0.0
-    add_child(bg_rect)
+    bg_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    ui_root.add_child(bg_rect)
 
-    # --- Kitty image: small, top-center, well above text ---
+    # --- Kitty and text stacked in a centered VBox ---
+    var center := CenterContainer.new()
+    center.set_anchors_preset(Control.PRESET_FULL_RECT)
+    center.size = screen
+    center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    ui_root.add_child(center)
+
+    var stack := Dialogue.new()
+    stack.custom_minimum_size = Vector2(screen.x * 0.8, 0.0)
+    stack.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+    stack.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+    stack.alignment = BoxContainer.ALIGNMENT_CENTER
+    stack.add_theme_constant_override("separation", TEXT_GAP)
+    center.add_child(stack)
+
     var tex: Texture2D = load(CUTSCENE_IMAGE_PATH) as Texture2D
-    var kitty_image := TextureRect.new()
+    var kitty_image: TextureRect = CutsceneKitty.new()
     kitty_image.texture = tex
-    kitty_image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-    kitty_image.set_anchors_preset(Control.PRESET_CENTER_TOP)
-    kitty_image.position = Vector2(screen.x * 0.5, screen.y * 0.16)
-    kitty_image.custom_minimum_size = Vector2(screen.x * 0.25, screen.y * 0.15)
-    add_child(kitty_image)
+    kitty_image.kitty_scale = KITTY_SCALE
+    kitty_image.top_padding = KITTY_TOP_PADDING
+    stack.add_child(kitty_image)
 
-    # --- Text block: centered near bottom, no overlap ---
-    var text_label := Label.new()
-    text_label.text = "kitty lives quietly indoors, and when she drifts into sleep her worries and triggers appear as small yarn balls rolling through her mind. the boss arrives, calm and wordless, adding more yarn and turning her thoughts into a challenge she must face. kitty moves through the chaos with soft determination, brushing aside what she can until the dream finally lets her wake..."
+    var text_label := RichTextLabel.new()
+    text_label.text = "kitty lives quietly indoors, and when she drifts into sleep her worries and triggers appear as small yarn\n balls rolling through her mind. the boss arrives, calm and wordless, adding more yarn and turning her thoughts into a challenge\n she must face. kitty moves through the chaos with soft determination, brushing aside what she can until the dream finally lets\nher wake..."
     text_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-    text_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
     text_label.autowrap_mode = TextServer.AUTOWRAP_WORD
-
-    var text_width := screen.x * 0.8
-    var text_height := screen.y * 0.3
-    text_label.size = Vector2(text_width, text_height)
-    # Lives clearly in the bottom half of the screen
-    text_label.position = Vector2(
-        (screen.x - text_width) * 0.5,
-        screen.y * 0.60
-    )
+    text_label.fit_content = true
+    text_label.custom_minimum_size = Vector2(0, 120)
+    text_label.size_flags_horizontal = Control.SIZE_FILL
+    text_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
     var font: Font = load(CUTSCENE_FONT_PATH) as Font
     if font:
         text_label.add_theme_font_override("font", font)
         text_label.add_theme_font_size_override("font_size", 18)
 
-    add_child(text_label)
+    stack.add_child(text_label)
 
 
 func _ensure_input_actions() -> void:
