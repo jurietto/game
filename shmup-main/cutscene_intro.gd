@@ -53,8 +53,8 @@ func _ready() -> void:
     kitty_image.position = Vector2(screen.x * 0.5, KITTY_TOP_PADDING)
     ui_root.add_child(kitty_image)
 
-    var kitty_height := tex.get_size().y * KITTY_SCALE
-    var text_top := KITTY_TOP_PADDING + kitty_height + TEXT_GAP
+    var kitty_height: float = tex.get_size().y * KITTY_SCALE
+    var text_top: float = KITTY_TOP_PADDING + kitty_height + TEXT_GAP
 
     # --- Text block: centered, no overlap ---
     var dialogue_container: VBoxContainer = Dialogue.new()
@@ -65,7 +65,7 @@ func _ready() -> void:
     dialogue_container.offset_left = 0.0
     dialogue_container.offset_right = 0.0
     dialogue_container.offset_top = text_top
-    var desired_height := min(screen.y * 0.35, max(screen.y - text_top - 20.0, 120.0))
+    var desired_height: float = min(screen.y * 0.35, max(screen.y - text_top - 20.0, 120.0))
     dialogue_container.offset_bottom = text_top + desired_height
     dialogue_container.add_theme_constant_override("separation", 20)
 
