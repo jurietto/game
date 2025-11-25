@@ -31,9 +31,9 @@ func _ready() -> void:
     kitty_image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
     kitty_image.set_anchors_preset(Control.PRESET_CENTER_TOP)
     # Top center
-    kitty_image.position = Vector2(screen.x * 0.5, screen.y * 0.18)
+    kitty_image.position = Vector2(screen.x * 0.5, screen.y * 0.12)
     # Smaller so it doesn't reach the text area
-    kitty_image.custom_minimum_size = Vector2(screen.x * 0.35, screen.y * 0.18)
+    kitty_image.custom_minimum_size = Vector2(screen.x * 0.28, screen.y * 0.2)
     add_child(kitty_image)
 
     # --- Text block: left-aligned, clearly below kitty ---
@@ -45,9 +45,9 @@ func _ready() -> void:
 
     var margin_left := screen.x * 0.1
     var text_width := screen.x * 0.8
-    var text_height := screen.y * 0.25
+    var text_height := screen.y * 0.45
     # Start lower so it can’t overlap the kitty at all
-    text_label.position = Vector2(margin_left, screen.y * 0.7)
+    text_label.position = Vector2(margin_left, screen.y * 0.38)
     text_label.size = Vector2(text_width, text_height)
 
     var font: Font = load(CUTSCENE_FONT_PATH) as Font
