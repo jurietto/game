@@ -11,10 +11,14 @@ func _ready():
     anchor_bottom = 0.0
 
     if texture:
-        var tex_width := texture.get_size().x * kitty_scale
-        offset_left = -tex_width * 0.5
+        var tex_size := texture.get_size() * kitty_scale
+        offset_left = -tex_size.x * 0.5
+        offset_right = tex_size.x * 0.5
+        offset_bottom = top_padding + tex_size.y
     else:
         offset_left = 0.0
+        offset_right = 0.0
+        offset_bottom = top_padding
 
     offset_top = top_padding
     mouse_filter = MOUSE_FILTER_IGNORE
