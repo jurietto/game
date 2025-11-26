@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d1r2tm3ulob45"
+path="res://.godot/imported/kitty cutscene.mp3-754284427c26bc6b360447ae37a6fa5a.mp3str"
+
+[deps]
+
+source_file="res://kitty cutscene.mp3"
+dest_files=["res://.godot/imported/kitty cutscene.mp3-754284427c26bc6b360447ae37a6fa5a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
