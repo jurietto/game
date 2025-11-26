@@ -1,2 +1,0 @@
-# shmup
-game
